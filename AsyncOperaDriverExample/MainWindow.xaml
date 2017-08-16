@@ -40,6 +40,22 @@
                     <Button Content="webDriver.GetScreenshot" HorizontalAlignment="Left" Margin="160,76,0,0" VerticalAlignment="Top" Width="259" Click="Button_Click_8"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Open">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="91*"/>
+                        <RowDefinition Height="200*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="tbOpenProfileDir" HorizontalAlignment="Left" Height="23" Margin="23,31,0,0" TextWrapping="Wrap" Text="C:\Opera\profiles\prof1" VerticalAlignment="Top" Width="242"/>
+                    <Button Content="open profile with user dir" HorizontalAlignment="Left" Margin="278,34,0,0" VerticalAlignment="Top" Width="177" Click="Button_Click_9" Height="20"/>
+                    <TextBox x:Name="tbDevToolsRes2" Grid.Row="1" TextWrapping="Wrap" Text="TextBox"/>
+                    <Button Content="close" HorizontalAlignment="Left" Margin="210,6,0,0" VerticalAlignment="Top" Width="123" Click="Button_Click_1" Height="20"/>
+                    <TextBox x:Name="tbOpenProfilePort" HorizontalAlignment="Left" Height="23" Margin="30,59,0,0" TextWrapping="Wrap" Text="7777" VerticalAlignment="Top" Width="120"/>
+                    <Button Content="open temp profile" HorizontalAlignment="Left" Margin="30,6,0,0" VerticalAlignment="Top" Width="141" Height="20" Click="Button_Click"/>
+                    <Button Content="open profile with user dir and port" HorizontalAlignment="Left" Margin="162,59,0,0" VerticalAlignment="Top" Width="203" Click="Button_Click_10"/>
+                </Grid>
+            </TabItem>
+
         </TabControl>
     </Grid>
 </Window>

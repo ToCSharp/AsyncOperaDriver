@@ -30,14 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AsyncChromeDriver, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AsyncChromeDriver.0.1.4\lib\net461\AsyncChromeDriver.dll</HintPath>
+    <Reference Include="AsyncChromeDriver, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AsyncChromeDriver.0.1.5\lib\net461\AsyncChromeDriver.dll</HintPath>
     </Reference>
     <Reference Include="AsyncWebDriver, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AsyncWebDriver.1.1.1\lib\net452\AsyncWebDriver.dll</HintPath>
     </Reference>
     <Reference Include="BaristaLabs.ChromeDevTools.Runtime.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AsyncChromeDriver.0.1.4\lib\net461\BaristaLabs.ChromeDevTools.Runtime.Framework.dll</HintPath>
+      <HintPath>..\packages\AsyncChromeDriver.0.1.5\lib\net461\BaristaLabs.ChromeDevTools.Runtime.Framework.dll</HintPath>
     </Reference>
     <Reference Include="IWebBrowserClient, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AsyncWebDriver.1.1.1\lib\net452\IWebBrowserClient.dll</HintPath>

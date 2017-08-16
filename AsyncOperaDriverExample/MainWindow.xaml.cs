@@ -37,10 +37,12 @@ namespace AsyncOperaDriverExample
                 webDriver = new WebDriver(asyncOperaDriver);
                 await asyncOperaDriver.Connect();
                 tbDevToolsRes.Text = "opened";
+                tbDevToolsRes2.Text = $"opened on port {asyncOperaDriver.Port} in dir {asyncOperaDriver.UserDir} \nWhen close, dir will be DELETED";
             }
             catch (Exception ex)
             {
                 tbDevToolsRes.Text = ex.ToString();
+                tbDevToolsRes2.Text = ex.ToString();
             }
         }
 
@@ -49,6 +51,7 @@ namespace AsyncOperaDriverExample
             await webDriver?.Close();
             //await asyncChromeDriver?.Close();
             tbDevToolsRes.Text = "closed";
+            tbDevToolsRes2.Text = "closed";
         }
 
         ObservableCollection<ResponseReceivedEventInfo> responseEvents = new ObservableCollection<ResponseReceivedEventInfo>();
@@ -292,6 +295,50 @@ namespace AsyncOperaDriverExample
             catch (Exception ex)
             {
                 tbDevToolsRes.Text = ex.ToString();
+            }
+        }
+
+        private async void Button_Click_9(object sender, RoutedEventArgs e)
+        {
+            var userDir = tbOpenProfileDir.Text;
+            try
+            {
+                asyncOperaDriver = new AsyncOperaDriver(userDir);
+                webDriver = new WebDriver(asyncOperaDriver);
+                // await asyncChromeDriver.Connect(); // browser opens here
+                await webDriver.GoToUrl("https://www.google.com/"); // browser opens here
+                var mess = $"opened on port {asyncOperaDriver.Port} in dir {asyncOperaDriver.UserDir} \nWhen close, dir will NOT be deleted";
+                tbDevToolsRes.Text = mess;
+                tbDevToolsRes2.Text = mess;
+            }
+            catch (Exception ex)
+            {
+                tbDevToolsRes.Text = ex.ToString();
+                tbDevToolsRes2.Text = ex.ToString();
+            }
+
+        }
+
+        private async void Button_Click_10(object sender, RoutedEventArgs e)
+        {
+            var userDir = tbOpenProfileDir.Text;
+            if (int.TryParse(tbOpenProfilePort.Text, out int port))
+            {
+                try
+                {
+                    asyncOperaDriver = new AsyncOperaDriver(userDir, port);
+                    webDriver = new WebDriver(asyncOperaDriver);
+                    // await asyncChromeDriver.Connect(); // browser opens here
+                    await webDriver.GoToUrl("https://www.google.com/"); // browser opens here
+                    var mess = $"opened on port {asyncOperaDriver.Port} in dir {asyncOperaDriver.UserDir} \nWhen close, dir will NOT be deleted";
+                    tbDevToolsRes.Text = mess;
+                    tbDevToolsRes2.Text = mess;
+                }
+                catch (Exception ex)
+                {
+                    tbDevToolsRes.Text = ex.ToString();
+                    tbDevToolsRes2.Text = ex.ToString();
+                }
             }
         }
     }

@@ -9,17 +9,29 @@ using Zu.WebBrowser;
 
 namespace Zu.Opera
 {
-    public class AsyncOperaDriver: AsyncChromeDriver
+    public class AsyncOperaDriver : AsyncChromeDriver
     {
-        private bool isTempUserDir;
         public AsyncOperaDriver(bool openInTempDir = true)
             : this(11000 + new Random().Next(2000))
         {
             if (openInTempDir)
             {
-                isTempUserDir = true;
+                IsTempUserDir = true;
                 UserDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             }
+        }
+        public AsyncOperaDriver(string profileDir, int port)
+            : this(port)
+        {
+            IsTempUserDir = false;
+            UserDir = profileDir;
+        }
+
+        public AsyncOperaDriver(string profileDir)
+            : this(11000 + new Random().Next(2000))
+        {
+            IsTempUserDir = false;
+            UserDir = profileDir;
         }
 
         public AsyncOperaDriver(int port)
