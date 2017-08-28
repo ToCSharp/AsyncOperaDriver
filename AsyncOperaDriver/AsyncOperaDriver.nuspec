@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/ToCSharp/AsyncOperaDriver/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ToCSharp/AsyncOperaDriver</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright Oleg Zudov 2017</copyright>
+    <tags>Opera Chrome DevTools AsyncChromeDriver AsyncWebDriver WebDriver</tags>
+  </metadata>
+</package>

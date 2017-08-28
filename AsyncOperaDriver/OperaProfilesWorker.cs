@@ -51,16 +51,16 @@ namespace Zu.Chrome
 
         public static OperaProcessInfo OpenOperaProfile(string userDir, int port = 5999)
         {
-            if (string.IsNullOrWhiteSpace(userDir)) throw new ArgumentNullException(nameof(userDir));
+            //if (string.IsNullOrWhiteSpace(userDir)) throw new ArgumentNullException(nameof(userDir));
             if (port < 1 || port > 65000) throw new ArgumentOutOfRangeException(nameof(port));
             bool firstRun = false;
-            if (!Directory.Exists(userDir))
+            if (!string.IsNullOrWhiteSpace(userDir) && !Directory.Exists(userDir))
             {
                 firstRun = true;
                 Directory.CreateDirectory(userDir);
             }
                 var args = "--remote-debugging-port=" + port + " "
-                + "--user-data-dir=\"" + userDir + "\""
+                + (string.IsNullOrWhiteSpace(userDir) ? "" : "--user-data-dir=\"" + userDir + "\"")
                 + (firstRun ? " --bwsi --no-first-run" : "");
             var process = new ProcessWithJobObject();
             process.StartProc(OperaBinaryFileName, args);

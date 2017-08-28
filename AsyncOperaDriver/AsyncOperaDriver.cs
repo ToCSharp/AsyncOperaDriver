@@ -6,31 +6,34 @@ using System.Threading;
 using System.Threading.Tasks;
 using Zu.Chrome;
 using Zu.WebBrowser;
+using Zu.WebBrowser.BasicTypes;
 
 namespace Zu.Opera
 {
     public class AsyncOperaDriver : AsyncChromeDriver
     {
+        private DriverConfig config;
+
         public AsyncOperaDriver(bool openInTempDir = true)
             : this(11000 + new Random().Next(2000))
         {
             if (openInTempDir)
             {
-                IsTempUserDir = true;
+                IsTempProfile = true;
                 UserDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             }
         }
         public AsyncOperaDriver(string profileDir, int port)
             : this(port)
         {
-            IsTempUserDir = false;
+            IsTempProfile = false;
             UserDir = profileDir;
         }
 
         public AsyncOperaDriver(string profileDir)
             : this(11000 + new Random().Next(2000))
         {
-            IsTempUserDir = false;
+            IsTempProfile = false;
             UserDir = profileDir;
         }
 
@@ -42,11 +45,17 @@ namespace Zu.Opera
             CreateDriverCore();
         }
 
+        public AsyncOperaDriver(DriverConfig config)
+            :base(config)
+        {
+            
+        }
+
         public override async Task<string> Connect(CancellationToken cancellationToken = default(CancellationToken))
         {
             UnsubscribeDevToolsSessionEvent();
             DoConnectWhenCheckConnected = false;
-            if (!string.IsNullOrWhiteSpace(UserDir)) chromeProcess = await OpenOperaProfile(UserDir);
+            /*if (!string.IsNullOrWhiteSpace(UserDir)) */chromeProcess = await OpenOperaProfile(UserDir);
             await DevTools.Connect();
             SubscribeToDevToolsSessionEvent();
             await FrameTracker.Enable();
