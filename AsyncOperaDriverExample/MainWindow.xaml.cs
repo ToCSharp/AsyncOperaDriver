@@ -266,13 +266,13 @@ namespace AsyncOperaDriverExample
             }
         }
 
-        private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (webDriver != null)
             {
                 try
                 {
-                    await webDriver.Close();
+                    webDriver.CloseSync();
                 }
                 catch { }
             }

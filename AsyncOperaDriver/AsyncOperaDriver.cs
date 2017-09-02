@@ -13,6 +13,7 @@ namespace Zu.Opera
     public class AsyncOperaDriver : AsyncChromeDriver
     {
         private DriverConfig config;
+        private bool _isClosed = false;
 
         public AsyncOperaDriver(bool openInTempDir = true)
             : this(11000 + new Random().Next(2000))
@@ -56,7 +57,29 @@ namespace Zu.Opera
             UnsubscribeDevToolsSessionEvent();
             DoConnectWhenCheckConnected = false;
             /*if (!string.IsNullOrWhiteSpace(UserDir)) */chromeProcess = await OpenOperaProfile(UserDir);
-            await DevTools.Connect();
+            int connection_attempts = 0;
+            const int MAX_ATTEMPTS = 10;
+            while (true)
+            {
+                connection_attempts++;
+                try
+                {
+                    await DevTools.Connect();
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    //LiveLogger.WriteLine("Connection attempt {0} failed with: {1}", connection_attempts, ex);
+                    if (_isClosed || connection_attempts >= MAX_ATTEMPTS)
+                    {
+                        throw;
+                    }
+                    else
+                    {
+                        await Task.Delay(200);
+                    }
+                }
+            }
             SubscribeToDevToolsSessionEvent();
             await FrameTracker.Enable();
             return $"Connected to Opera port {Port}";
