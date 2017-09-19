@@ -12,6 +12,7 @@ using Zu.AsyncWebDriver;
 using Zu.AsyncWebDriver.Remote;
 using AsyncChromeDriverExample;
 using Zu.Opera;
+using Zu.WebBrowser.BasicTypes;
 
 namespace AsyncOperaDriverExample
 {
@@ -290,7 +291,12 @@ namespace AsyncOperaDriverExample
                 var res2 = await webDriver.GoToUrl("https://www.google.com/");
                 var screenshot = await webDriver.GetScreenshot();
                 string path = GetFilePathToSaveScreenshot();
-                screenshot.SaveAsFile(path, Zu.WebBrowser.BasicTypes.ScreenshotImageFormat.Png);
+                //screenshot.SaveAsFile(path, Zu.WebBrowser.BasicTypes.ScreenshotImageFormat.Png);
+                using (MemoryStream imageStream = new MemoryStream(screenshot.AsByteArray))
+                {
+                    System.Drawing.Image screenshotImage = System.Drawing.Image.FromStream(imageStream);
+                    screenshotImage.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+                }
             }
             catch (Exception ex)
             {

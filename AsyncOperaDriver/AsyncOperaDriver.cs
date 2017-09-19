@@ -40,9 +40,8 @@ namespace Zu.Opera
 
         public AsyncOperaDriver(int port)
         {
-            CurrentContext = Contexts.Chrome;
             Port = port;
-            DevTools = new ChromeDevTools(Port);
+            DevTools = new ChromeDevToolsConnection(Port);
             CreateDriverCore();
         }
 
