@@ -1,14 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncOperaDriver", "AsyncOperaDriver\AsyncOperaDriver.csproj", "{2C66F801-3F4A-45C2-8D1E-F5338E0C795C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA730471-6B9F-4614-970C-192E69666CC3}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
+		NOTICE.txt = NOTICE.txt
 		README.md = README.md
+		THIRD-PARTY-NOTICES.txt = THIRD-PARTY-NOTICES.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncOperaDriverExample", "AsyncOperaDriverExample\AsyncOperaDriverExample.csproj", "{21C26FAF-0D27-4F9C-A73B-8E0BEA876858}"
@@ -30,5 +32,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {735A602E-136E-4B27-9AEA-23BD5CB470F4}
 	EndGlobalSection
 EndGlobal
