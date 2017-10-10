@@ -53,11 +53,16 @@ namespace Zu.Opera
 
         public override async Task<string> Connect(CancellationToken cancellationToken = default(CancellationToken))
         {
+            isConnected = true;
             UnsubscribeDevToolsSessionEvent();
             DoConnectWhenCheckConnected = false;
-            /*if (!string.IsNullOrWhiteSpace(UserDir)) */chromeProcess = await OpenOperaProfile(UserDir);
+            if (!Config.DoNotOpenChromeProfile)
+            {
+                chromeProcess = await OpenOperaProfile(Config);
+                if (Config.IsTempProfile) await Task.Delay(Config.TempDirCreateDelay);
+            }
             int connection_attempts = 0;
-            const int MAX_ATTEMPTS = 10;
+            const int MAX_ATTEMPTS = 5;
             while (true)
             {
                 connection_attempts++;
@@ -81,9 +86,56 @@ namespace Zu.Opera
             }
             SubscribeToDevToolsSessionEvent();
             await FrameTracker.Enable();
-            return $"Connected to Opera port {Port}";
+            await DomTracker.Enable();
+
+            if (Config.DoOpenBrowserDevTools) await OpenBrowserDevTools();
+
+            return $"Connected to Chrome port {Port}";
+
+            //UnsubscribeDevToolsSessionEvent();
+            //DoConnectWhenCheckConnected = false;
+            ///*if (!string.IsNullOrWhiteSpace(UserDir)) */chromeProcess = await OpenOperaProfile(UserDir);
+            //int connection_attempts = 0;
+            //const int MAX_ATTEMPTS = 10;
+            //while (true)
+            //{
+            //    connection_attempts++;
+            //    try
+            //    {
+            //        await DevTools.Connect();
+            //        break;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        //LiveLogger.WriteLine("Connection attempt {0} failed with: {1}", connection_attempts, ex);
+            //        if (_isClosed || connection_attempts >= MAX_ATTEMPTS)
+            //        {
+            //            throw;
+            //        }
+            //        else
+            //        {
+            //            await Task.Delay(200);
+            //        }
+            //    }
+            //}
+            //SubscribeToDevToolsSessionEvent();
+            //await FrameTracker.Enable();
+            //return $"Connected to Opera port {Port}";
         }
 
+        private async Task<ChromeProcessInfo> OpenOperaProfile(ChromeDriverConfig config)
+        {
+            OperaProcessInfo res = null;
+            await Task.Run(() => res = OperaProfilesWorker.OpenOperaProfile(config));
+            return res;
+        }
+
+        //public new async Task OpenBrowserDevTools()
+        //{
+        //    if (BrowserDevToolsConfig == null) BrowserDevToolsConfig = new ChromeDriverConfig();
+        //    BrowserDevTools = new AsyncChromeDriver(BrowserDevToolsConfig);
+        //    await BrowserDevTools.Navigation.GoToUrl("http://127.0.0.1:" + Port + "/devtools/inspector.html?ws=127.0.0.1:" + Config.DevToolsConnectionProxyPort + "/WSProxy");
+        //}
 
 
         private async Task<OperaProcessInfo> OpenOperaProfile(string userDir)

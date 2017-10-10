@@ -65,24 +65,44 @@ namespace Zu.Chrome
             var process = new ProcessWithJobObject();
             process.StartProc(OperaBinaryFileName, args);
 
-            //var process = new Process();
-            //process.StartInfo.FileName = OperaBinaryFileName;
-            //process.StartInfo.Arguments = args;
-            //process.StartInfo.UseShellExecute = false;
-            ////process.StartInfo.RedirectStandardOutput = true;
-
-            //process.Start();
-
-            //Thread.Sleep(1000);
-
-            //// wait for closing previos Firefox
-            //if (process.MainWindowTitle != "" && !process.MainWindowTitle.EndsWith("Google Chrome"))
-            //{
-            //    var reader = process.StandardOutput;
-            //    var v = reader.ReadToEnd();
-            //}
             return new OperaProcessInfo { ProcWithJobObject = process, UserDir = userDir, Port = port };
         }
 
+        internal static OperaProcessInfo OpenOperaProfile(ChromeDriverConfig config)
+        {
+            if (config.Port < 1 || config.Port > 65000) throw new ArgumentOutOfRangeException(nameof(config.Port));
+            bool firstRun = false;
+            if (!string.IsNullOrWhiteSpace(config.UserDir) && !Directory.Exists(config.UserDir))
+            {
+                firstRun = true;
+                Directory.CreateDirectory(config.UserDir);
+            }
+
+            var args = "--remote-debugging-port=" + config.Port
+                + (string.IsNullOrWhiteSpace(config.UserDir) ? "" : " --user-data-dir=\"" + config.UserDir + "\"")
+                + (firstRun ? " --bwsi --no-first-run" : "")
+                + (config.Headless ? " --headless --disable-gpu" : "")
+                + (config.WindowSize != null ? $" --window-size={config.WindowSize.Width},{config.WindowSize.Height}" : "")
+                + (string.IsNullOrWhiteSpace(config.CommandLineArgumets) ? "" : " " + config.CommandLineArgumets);
+
+
+            //if (config.Headless)
+            //{
+                var process = new ProcessWithJobObject();
+                process.StartProc(OperaBinaryFileName, args);
+                Thread.Sleep(1000);
+                return new OperaProcessInfo { ProcWithJobObject = process, UserDir = config.UserDir, Port = config.Port };
+            //}
+            //else
+            //{
+            //    var process = new Process();
+            //    process.StartInfo.FileName = OperaBinaryFileName;
+            //    process.StartInfo.Arguments = args;
+            //    process.StartInfo.UseShellExecute = false;
+            //    process.Start();
+            //    Thread.Sleep(1000);
+            //    return new OperaProcessInfo { Proc = process, UserDir = config.UserDir, Port = config.Port };
+            //}
+        }
     }
 }

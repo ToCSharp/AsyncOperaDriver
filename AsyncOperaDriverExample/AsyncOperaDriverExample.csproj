@@ -34,17 +34,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AsyncChromeDriver, Version=0.2.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AsyncChromeDriver.0.2.6\lib\net461\AsyncChromeDriver.dll</HintPath>
+    <Reference Include="AsyncChromeDriver, Version=0.3.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AsyncChromeDriver.0.3.4\lib\net462\AsyncChromeDriver.dll</HintPath>
     </Reference>
-    <Reference Include="AsyncWebDriver, Version=1.2.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AsyncWebDriver.1.2.8\lib\net452\AsyncWebDriver.dll</HintPath>
+    <Reference Include="AsyncWebDriver, Version=1.2.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AsyncWebDriver.1.2.12\lib\net452\AsyncWebDriver.dll</HintPath>
     </Reference>
     <Reference Include="BaristaLabs.ChromeDevTools.Runtime.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AsyncChromeDriver.0.2.6\lib\net461\BaristaLabs.ChromeDevTools.Runtime.Framework.dll</HintPath>
+      <HintPath>..\packages\AsyncChromeDriver.0.3.4\lib\net462\BaristaLabs.ChromeDevTools.Runtime.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="IAsyncWebBrowserClient, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IAsyncWebBrowserClient.0.1.5\lib\net452\IAsyncWebBrowserClient.dll</HintPath>
+    <Reference Include="ChromeWebSocketProxy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AsyncChromeDriver.0.3.4\lib\net462\ChromeWebSocketProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="IAsyncWebBrowserClient, Version=0.1.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IAsyncWebBrowserClient.0.1.9\lib\net452\IAsyncWebBrowserClient.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -62,6 +65,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="websocket-sharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AsyncChromeDriver.0.3.4\lib\net462\websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="WebSocket4Net, Version=0.14.1.0, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
       <HintPath>..\packages\WebSocket4Net.0.14.1\lib\net45\WebSocket4Net.dll</HintPath>

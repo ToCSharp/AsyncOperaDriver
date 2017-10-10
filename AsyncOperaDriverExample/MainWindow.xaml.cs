@@ -121,22 +121,23 @@ namespace AsyncOperaDriverExample
             }
             try
             {
+                await webDriver.Options().Timeouts.SetImplicitWait(TimeSpan.FromSeconds(3));
+                // name = "q", 0 - time to wait element, not use ImplicitWait
+                var prevQuery = await webDriver.FindElementByNameOrDefault("q", 0);
                 var res2 = await webDriver.GoToUrl("https://www.google.com/");
-                var query = await webDriver.FindElement(By.Name("q"));
-                if (query == null)
-                {
-                    await Task.Delay(1000);
-                    query = await webDriver.FindElement(By.Name("q"));
-                }
+                var query = await webDriver.FindElementByName("q", prevQuery?.Id);
+
+                //await query.SendKeys("ToCSharp");
+                var rnd = new Random();
                 foreach (var v in "ToCSharp")
                 {
-                    await Task.Delay(500 + new Random().Next(1000));
+                    await Task.Delay(500 + rnd.Next(1000));
                     await query.SendKeys(v.ToString());
                 }
                 await Task.Delay(500);
+                prevQuery = await webDriver.FindElementByName("q");
                 await query.SendKeys(Keys.Enter);
-                await Task.Delay(2000);
-                query = await webDriver.FindElement(By.Name("q"));
+                query = await webDriver.FindElementByName("q", prevQuery?.Id);
                 await query.SendKeys(Keys.ArrowDown);
                 await Task.Delay(1000);
                 await query.SendKeys(Keys.ArrowDown);
@@ -148,8 +149,8 @@ namespace AsyncOperaDriverExample
                 await query.SendKeys(Keys.Enter);
                 var el = await webDriver.SwitchTo().ActiveElement();
                 await webDriver.Keyboard.SendKeys(Keys.PageDown);
-                var allCookies = await asyncOperaDriver.DevTools.Session.Network.GetAllCookies(new GetAllCookiesCommand());
-                var screenshot = await asyncOperaDriver.DevTools.Session.Page.CaptureScreenshot(new BaristaLabs.ChromeDevTools.Runtime.Page.CaptureScreenshotCommand());
+                var allCookies = await asyncOperaDriver.DevTools.Session.Network.GetAllCookies();
+                var screenshot = await asyncOperaDriver.DevTools.Session.Page.CaptureScreenshot();
                 if (!string.IsNullOrWhiteSpace(screenshot.Data))
                 {
                     var dir = @"C:\temp";
@@ -163,7 +164,6 @@ namespace AsyncOperaDriverExample
                     } while (File.Exists(path));
                     File.WriteAllBytes(path, Convert.FromBase64String(screenshot.Data));
                 }
-
             }
             catch (Exception ex)
             {
@@ -346,6 +346,38 @@ namespace AsyncOperaDriverExample
                     tbDevToolsRes2.Text = ex.ToString();
                 }
             }
+        }
+
+        private void AddInfo(string mess)
+        {
+            tbDevToolsRes2.Text = mess;
+        }
+
+        private async Task OpenOpera(DriverConfig chromeDriverConfig)
+        {
+            try
+            {
+                asyncOperaDriver = new AsyncOperaDriver(chromeDriverConfig);
+                webDriver = new WebDriver(asyncOperaDriver);
+                await asyncOperaDriver.Connect();
+
+                AddInfo($"opened on port {asyncOperaDriver.Port} in dir {asyncOperaDriver.UserDir} \nWhen close, dir will be DELETED");
+            }
+            catch (Exception ex)
+            {
+                AddInfo(ex.ToString());
+            }
+        }
+
+        private async void Button_Click_11(object sender, RoutedEventArgs e)
+        {
+            DriverConfig driverConfig = new DriverConfig().SetDoOpenBrowserDevTools();
+            await OpenOpera(driverConfig);
+        }
+
+        private async void Button_Click_12(object sender, RoutedEventArgs e)
+        {
+            await OpenOpera(new DriverConfig().SetHeadless().SetDoOpenBrowserDevTools());
         }
     }
 }
