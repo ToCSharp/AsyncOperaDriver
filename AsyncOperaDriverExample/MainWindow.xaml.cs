@@ -50,9 +50,10 @@ namespace AsyncOperaDriverExample
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            await firefoxDevTools?.Close();
-            await chromeDevTools?.Close();
-            await webDriver?.Close();
+            if(firefoxDevTools != null) await firefoxDevTools.Close();
+            if (chromeDevTools != null) await chromeDevTools.Close();
+            if (asyncOperaDriver != null) await asyncOperaDriver.Close();
+            if (webDriver != null) await webDriver.Close();
             //await asyncChromeDriver?.Close();
             tbDevToolsRes.Text = "closed";
             tbDevToolsRes2.Text = "closed";
