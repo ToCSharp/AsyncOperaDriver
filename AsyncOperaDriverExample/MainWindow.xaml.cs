@@ -13,6 +13,7 @@ using Zu.AsyncWebDriver.Remote;
 using AsyncChromeDriverExample;
 using Zu.Opera;
 using Zu.WebBrowser.BasicTypes;
+using Zu.Chrome;
 
 namespace AsyncOperaDriverExample
 {
@@ -49,6 +50,8 @@ namespace AsyncOperaDriverExample
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            await firefoxDevTools?.Close();
+            await chromeDevTools?.Close();
             await webDriver?.Close();
             //await asyncChromeDriver?.Close();
             tbDevToolsRes.Text = "closed";
@@ -57,6 +60,8 @@ namespace AsyncOperaDriverExample
 
         ObservableCollection<ResponseReceivedEventInfo> responseEvents = new ObservableCollection<ResponseReceivedEventInfo>();
         ObservableCollection<WebSocketFrameReceivedEventInfo> wsEvents = new ObservableCollection<WebSocketFrameReceivedEventInfo>();
+        private AsyncChromeDriver chromeDevTools;
+        private Zu.Firefox.AsyncFirefoxDriver firefoxDevTools;
 
         private async void Button_Click_2(object sender, RoutedEventArgs e)
         {
@@ -269,14 +274,9 @@ namespace AsyncOperaDriverExample
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (webDriver != null)
-            {
-                try
-                {
-                    webDriver.CloseSync();
-                }
-                catch { }
-            }
+            firefoxDevTools?.CloseSync();
+            chromeDevTools?.CloseSync();
+            webDriver?.CloseSync();
         }
 
         private async void Button_Click_8(object sender, RoutedEventArgs e)
@@ -353,11 +353,11 @@ namespace AsyncOperaDriverExample
             tbDevToolsRes2.Text = mess;
         }
 
-        private async Task OpenOpera(DriverConfig chromeDriverConfig)
+        private async Task OpenOpera(DriverConfig driverConfig)
         {
             try
             {
-                asyncOperaDriver = new AsyncOperaDriver(chromeDriverConfig);
+                asyncOperaDriver = new AsyncOperaDriver(driverConfig);
                 webDriver = new WebDriver(asyncOperaDriver);
                 await asyncOperaDriver.Connect();
 
@@ -378,6 +378,23 @@ namespace AsyncOperaDriverExample
         private async void Button_Click_12(object sender, RoutedEventArgs e)
         {
             await OpenOpera(new DriverConfig().SetHeadless().SetDoOpenBrowserDevTools());
+        }
+
+        private async void Button_Click_13(object sender, RoutedEventArgs e)
+        {
+            await OpenOpera(new ChromeDriverConfig().SetDoOpenWSProxy());
+            await asyncOperaDriver.OpenBrowserDevTools();
+            // OR
+            //chromeDevTools = new AsyncChromeDriver();
+            //await chromeDevTools.Navigation.GoToUrl(asyncOperaDriver.GetBrowserDevToolsUrl());
+        }
+
+        private async void Button_Click_14(object sender, RoutedEventArgs e)
+        {
+            await OpenOpera(new ChromeDriverConfig().SetDoOpenWSProxy());
+
+            firefoxDevTools = new Zu.Firefox.AsyncFirefoxDriver();
+            await firefoxDevTools.Navigation.GoToUrl(asyncOperaDriver.GetBrowserDevToolsUrl());
         }
     }
 }

@@ -51,6 +51,12 @@ namespace Zu.Opera
             
         }
 
+        public AsyncOperaDriver(ChromeDriverConfig config)
+            : base(config)
+        {
+
+        }
+
         public override async Task<string> Connect(CancellationToken cancellationToken = default(CancellationToken))
         {
             isConnected = true;
@@ -88,7 +94,7 @@ namespace Zu.Opera
             await FrameTracker.Enable();
             await DomTracker.Enable();
 
-            if (Config.DoOpenBrowserDevTools) await OpenBrowserDevTools();
+            if (Config.DoOpenBrowserDevTools) await OpenOperaBrowserDevTools();
 
             return $"Connected to Chrome port {Port}";
 
@@ -121,6 +127,13 @@ namespace Zu.Opera
             //SubscribeToDevToolsSessionEvent();
             //await FrameTracker.Enable();
             //return $"Connected to Opera port {Port}";
+        }
+
+        public async Task OpenOperaBrowserDevTools()
+        {
+            if (BrowserDevToolsConfig == null) BrowserDevToolsConfig = new ChromeDriverConfig();
+            BrowserDevTools = new AsyncOperaDriver(BrowserDevToolsConfig);
+            await BrowserDevTools.Navigation.GoToUrl(GetBrowserDevToolsUrl());
         }
 
         private async Task<ChromeProcessInfo> OpenOperaProfile(ChromeDriverConfig config)
