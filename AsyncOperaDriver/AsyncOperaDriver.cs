@@ -59,12 +59,12 @@ namespace Zu.Opera
 
         public override async Task<string> Connect(CancellationToken cancellationToken = default(CancellationToken))
         {
-            isConnected = true;
+            IsConnected = true;
             UnsubscribeDevToolsSessionEvent();
             DoConnectWhenCheckConnected = false;
             if (!Config.DoNotOpenChromeProfile)
             {
-                chromeProcess = await OpenOperaProfile(Config);
+                ChromeProcess = await OpenOperaProfile(Config);
                 if (Config.IsTempProfile) await Task.Delay(Config.TempDirCreateDelay);
             }
             int connection_attempts = 0;

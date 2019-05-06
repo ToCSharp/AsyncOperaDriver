@@ -7,7 +7,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Threading;
 using System.IO;
-using BaristaLabs.ChromeDevTools.Runtime.Network;
 using Zu.AsyncWebDriver;
 using Zu.AsyncWebDriver.Remote;
 using AsyncChromeDriverExample;
@@ -111,7 +110,7 @@ namespace AsyncOperaDriverExample
             }
         }
 
-        string CookieToString(BaristaLabs.ChromeDevTools.Runtime.Network.Cookie c)
+        string CookieToString(Zu.ChromeDevTools.Network.Cookie c)
         {
             var c2 = new Zu.WebBrowser.BasicTypes.Cookie(c.Name, c.Value, c.Domain, c.Path,
                 new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(c.Expires).ToLocalTime()); //, DateTimeOffset.FromUnixTimeMilliseconds((long)c.Expires).UtcDateTime);
@@ -214,10 +213,10 @@ namespace AsyncOperaDriverExample
             try
             {
                 await asyncOperaDriver.CheckConnected();
-                await asyncOperaDriver.DevTools.Session.Page.Enable(new BaristaLabs.ChromeDevTools.Runtime.Page.EnableCommand());
+                await asyncOperaDriver.DevTools.Session.Page.Enable(new Zu.ChromeDevTools.Page.EnableCommand());
                 asyncOperaDriver.DevTools.Session.Page.SubscribeToDomContentEventFiredEvent(async (e2) =>
                 {
-                    var screenshot = await asyncOperaDriver.DevTools.Session.Page.CaptureScreenshot(new BaristaLabs.ChromeDevTools.Runtime.Page.CaptureScreenshotCommand());
+                    var screenshot = await asyncOperaDriver.DevTools.Session.Page.CaptureScreenshot(new Zu.ChromeDevTools.Page.CaptureScreenshotCommand());
                     SaveScreenshot(screenshot.Data);
 
                 });
@@ -263,7 +262,7 @@ namespace AsyncOperaDriverExample
             try
             {
                 var res2 = await webDriver.GoToUrl("https://www.google.com/");
-                var screenshot = await asyncOperaDriver.DevTools.Session.Page.CaptureScreenshot(new BaristaLabs.ChromeDevTools.Runtime.Page.CaptureScreenshotCommand());
+                var screenshot = await asyncOperaDriver.DevTools.Session.Page.CaptureScreenshot(new Zu.ChromeDevTools.Page.CaptureScreenshotCommand());
                 SaveScreenshot(screenshot.Data);
 
             }

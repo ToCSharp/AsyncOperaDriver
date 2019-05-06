@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Oleg Zudov")]
 [assembly: AssemblyProduct("AsyncOperaDriver")]
-[assembly: AssemblyCopyright("Copyright © Oleg Zudov 2017")]
+[assembly: AssemblyCopyright("Copyright © Oleg Zudov 2017-2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.3.14.0")]
-[assembly: AssemblyFileVersion("0.3.14.0")]
+[assembly: AssemblyVersion("0.5.5.0")]
+[assembly: AssemblyFileVersion("0.5.5.0")]
